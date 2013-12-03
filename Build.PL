@@ -14,9 +14,13 @@ my $builder = Module::Build->new(
         'POE'                                      => 0.9999,
         'WWW::Google::Time'                        => 0.0101,
         'POE::Component::NonBlockingWrapper::Base' => 0.002,
+        'perl' => '5.006',
     },
+    configure_requires => { 'Module::Build' => 0 },
     add_to_cleanup      => [ 'POE-Component-WWW-Google-Time-*' ],
     create_makefile_pl => 'traditional',
 );
-
+if ( $ENV{RELEASE_TESTING} ) {
+    system('pod2text lib/POE/Component/WWW/Google/Time.pm > README');
+}
 $builder->create_build_script();
